@@ -7,7 +7,7 @@
 
 import UIKit
 
-class GalleriesTableViewController: UITableViewController {
+class GalleriesTableViewController: UITableViewController, UITextFieldDelegate {
     
     var sections: [[String]] = [[]]
     var galleries: [[URL]] = []
@@ -49,14 +49,29 @@ class GalleriesTableViewController: UITableViewController {
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "GalleryCell", for: indexPath)
-
+        
         // Configure the cell...
         let textField = UITextField(frame: cell.frame)
+        let tapToEditName = UITapGestureRecognizer(target: self, action: #selector(tapHandler(_:)))
+        tapToEditName.numberOfTapsRequired = 2
+        cell.addGestureRecognizer(tapToEditName)
+        textField.delegate = self
         textField.text = sections[indexPath.section][indexPath.row]
         cell.addSubview(textField)
         return cell
     }
-
+    
+    @objc func tapHandler(_ sender: UITapGestureRecognizer) {
+        if let cellView = sender.view as? UITableViewCell {
+            for subview in cellView.subviews {
+                if let textField = subview as? UITextField {
+                    textField.isEnabled = true
+                    return
+                }
+            }
+        }
+    }
+    
     @IBAction func addNewGallery(_ sender: UIBarButtonItem) {
         if !sections[0].contains("Untitled") {
             sections[0] += ["Untitled"]
@@ -83,6 +98,7 @@ class GalleriesTableViewController: UITableViewController {
             splitViewController?.preferredDisplayMode = UISplitViewController.DisplayMode.oneOverSecondary
         }
     }
+    
     /*
     // Override to support conditional editing of the table view.
     override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
@@ -98,10 +114,7 @@ class GalleriesTableViewController: UITableViewController {
             if editingStyle == .delete {
                 sections[1].append(sections[0][indexPath.row])
                 sections[0].remove(at: indexPath.row)
-//                tableView.deleteRows(at: [indexPath], with: .fade)
-            } else if editingStyle == .insert {
-                // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-            }
+            } else if editingStyle == .insert { }
         } else {
             sections[1].remove(at: indexPath.row)
             galleries.remove(at: indexPath.row)
