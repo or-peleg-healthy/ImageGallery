@@ -11,12 +11,16 @@ class GalleriesTableViewController: UITableViewController {
     
     var sections: [[String]] = [[]]
     var galleries: [[URL]] = []
+    let NASAURLStrings = [
+        "Cassini": "https://www.biography.com/.image/ar_1:1%2Cc_fill%2Ccs_srgb%2Cg_face%2Cq_auto:good%2Cw_300/MTQ3NTI2NTg2OTE1MTA0MjM4/kenrick_lamar_photo_by_jason_merritt_getty_images_entertainment_getty_476933160.jpg",
+        "Earth": "https://www.nasa.gov/sites/default/files/wave_earth_mosaic_3.jpg",
+        "Saturn": "https://www.nasa.gov/sites/default/files/saturn_collage.jpg"]
     var selectedGallery: [URL] = []
     var recentlyDeletedGallery: [URL] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        sections = [["Recently Deleted"], []]
+        sections = [[], []]
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
 
@@ -28,6 +32,14 @@ class GalleriesTableViewController: UITableViewController {
 
     override func numberOfSections(in tableView: UITableView) -> Int {
         return 2
+    }
+    
+    override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        if section == 0 {
+            return "Recently Deleted"
+        } else {
+            return "No Title"
+        }
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -57,7 +69,8 @@ class GalleriesTableViewController: UITableViewController {
                 itemThatExists = untitledCell + " " + String(numberOfUntitledCell)
             }
             sections[1] += [itemThatExists]
-            galleries.append([])
+            let newURL = URL(string: NASAURLStrings["Cassini"]!)!
+            galleries.append([newURL])
         }
         tableView.reloadData()
     }
@@ -81,23 +94,40 @@ class GalleriesTableViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if indexPath.section == 1 {
             if editingStyle == .delete {
+                sections[0].append(sections[1][indexPath.row])
                 sections[1].remove(at: indexPath.row)
-                galleries.remove(at: indexPath.row)
-                tableView.deleteRows(at: [indexPath], with: .fade)
+//                tableView.deleteRows(at: [indexPath], with: .fade)
             } else if editingStyle == .insert {
                 // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
             }
+        } else {
+            sections[0].remove(at: indexPath.row)
+            galleries.remove(at: indexPath.row)
         }
+        tableView.reloadData()
     }
     
-    override func tableView(_ tableView: UITableView, editingStyleForRowAt indexPath: IndexPath) -> UITableViewCell.EditingStyle
-    {
+    override func tableView(_ tableView: UITableView, leadingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
         if indexPath.section == 0 {
-            return UITableViewCell.EditingStyle.none
+            let undelete = UIContextualAction(style: UIContextualAction.Style.normal, title: "Undelete") { [self]_,_,_ in
+                self.sections[1].append(sections[0][indexPath.row])
+                self.sections[0].remove(at: indexPath.row)
+                tableView.reloadData()
+            }
+            let swipeAction = UISwipeActionsConfiguration(actions: [undelete])
+            return swipeAction
         } else {
-            return UITableViewCell.EditingStyle.delete
+            return nil
         }
     }
+//    override func tableView(_ tableView: UITableView, editingStyleForRowAt indexPath: IndexPath) -> UITableViewCell.EditingStyle
+//    {
+//        if indexPath.section == 0 {
+//            return UITableViewCell.EditingStyle.none
+//        } else {
+//            return UITableViewCell.EditingStyle.delete
+//        }
+//    }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if indexPath.section == 0 {
@@ -111,7 +141,8 @@ class GalleriesTableViewController: UITableViewController {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if let destination = segue.destination as? ImagesCollectionViewController {
             if segue.identifier == "Recently Deleted" {
-                    destination.imageURLs = recentlyDeletedGallery
+                destination.title = "Recently Deleted"
+                destination.imageURLs = recentlyDeletedGallery
             } else {
                 destination.imageURLs = selectedGallery
             }
