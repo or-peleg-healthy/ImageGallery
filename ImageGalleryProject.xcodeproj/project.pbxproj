@@ -12,6 +12,8 @@
 		B0529046283A213400C96072 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B0529044283A213400C96072 /* Main.storyboard */; };
 		B0529048283A213600C96072 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B0529047283A213600C96072 /* Assets.xcassets */; };
 		B052904B283A213600C96072 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B0529049283A213600C96072 /* LaunchScreen.storyboard */; };
+		B0529056283A25D100C96072 /* ImageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0529055283A25D100C96072 /* ImageViewController.swift */; };
+		B0529058283A28D300C96072 /* GalleriesTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0529057283A28D300C96072 /* GalleriesTableViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -22,6 +24,8 @@
 		B0529047283A213600C96072 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		B052904A283A213600C96072 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		B052904C283A213600C96072 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		B0529055283A25D100C96072 /* ImageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageViewController.swift; sourceTree = "<group>"; };
+		B0529057283A28D300C96072 /* GalleriesTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GalleriesTableViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -56,6 +60,8 @@
 			children = (
 				B0529052283A214300C96072 /* Supporting Files */,
 				B0529044283A213400C96072 /* Main.storyboard */,
+				B0529057283A28D300C96072 /* GalleriesTableViewController.swift */,
+				B0529055283A25D100C96072 /* ImageViewController.swift */,
 				B052904C283A213600C96072 /* Info.plist */,
 			);
 			path = ImageGalleryProject;
@@ -143,7 +149,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B0529058283A28D300C96072 /* GalleriesTableViewController.swift in Sources */,
 				B052903F283A213400C96072 /* AppDelegate.swift in Sources */,
+				B0529056283A25D100C96072 /* ImageViewController.swift in Sources */,
 				B0529041283A213400C96072 /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

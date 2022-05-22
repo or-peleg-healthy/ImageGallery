@@ -14,8 +14,8 @@
             <objects>
                 <splitViewController allowDoubleColumnStyle="YES" id="LJd-sG-83F" sceneMemberID="viewController">
                     <connections>
-                        <segue destination="Lhv-PG-Hkz" kind="relationship" relationship="masterViewController" id="ZsL-ix-Nwe"/>
                         <segue destination="rJZ-ZM-yVX" kind="relationship" relationship="detailViewController" id="LJj-SG-xBb"/>
+                        <segue destination="xec-u2-vCg" kind="relationship" relationship="masterViewController" id="SUn-cd-Vx1"/>
                     </connections>
                 </splitViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="DzJ-kO-Ssf" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -53,7 +53,7 @@
                     </collectionView>
                     <navigationItem key="navigationItem" id="PwA-Mk-ftk"/>
                     <connections>
-                        <segue destination="m4f-sI-MmE" kind="show" id="HFY-mp-Mad"/>
+                        <segue destination="m4f-sI-MmE" kind="show" identifier="Show Image" id="HFY-mp-Mad"/>
                     </connections>
                 </collectionViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="XqG-3n-KLc" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -117,16 +117,16 @@
             </objects>
             <point key="canvasLocation" x="1112" y="1235"/>
         </scene>
-        <!--Table View Controller-->
+        <!--Galleries Table View Controller-->
         <scene sceneID="fhI-aB-XdS">
             <objects>
-                <tableViewController id="Lhv-PG-Hkz" sceneMemberID="viewController">
+                <tableViewController id="Lhv-PG-Hkz" customClass="GalleriesTableViewController" customModule="ImageGalleryProject" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" id="2fK-K0-hCs">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" id="i1e-8q-vlK">
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="GalleryCell" id="i1e-8q-vlK">
                                 <rect key="frame" x="0.0" y="44.5" width="414" height="43.5"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="i1e-8q-vlK" id="RGA-8X-EEI">
@@ -140,12 +140,41 @@
                             <outlet property="delegate" destination="Lhv-PG-Hkz" id="jAR-ya-bcs"/>
                         </connections>
                     </tableView>
+                    <navigationItem key="navigationItem" id="IaE-aB-VFv">
+                        <barButtonItem key="rightBarButtonItem" systemItem="add" id="i5V-vz-4Ow">
+                            <connections>
+                                <action selector="addNewGallery:" destination="Lhv-PG-Hkz" id="upf-Tt-8Ie"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                    <connections>
+                        <segue destination="rJZ-ZM-yVX" kind="showDetail" id="7Sn-U5-w74"/>
+                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="T9W-yg-89f" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1113" y="306"/>
+            <point key="canvasLocation" x="1668" y="329"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="XhL-sg-TaG">
+            <objects>
+                <navigationController id="xec-u2-vCg" sceneMemberID="viewController">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="IXu-S9-2xU">
+                        <rect key="frame" x="0.0" y="44" width="414" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <connections>
+                        <segue destination="Lhv-PG-Hkz" kind="relationship" relationship="rootViewController" id="1Tx-71-Onk"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="IS4-B7-IE0" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="768" y="432"/>
         </scene>
     </scenes>
+    <inferredMetricsTieBreakers>
+        <segue reference="7Sn-U5-w74"/>
+    </inferredMetricsTieBreakers>
     <resources>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
