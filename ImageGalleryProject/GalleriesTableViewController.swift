@@ -35,7 +35,7 @@ class GalleriesTableViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        if section == 0 {
+        if section == 1 {
             return "Recently Deleted"
         } else {
             return "No Title"
@@ -51,24 +51,26 @@ class GalleriesTableViewController: UITableViewController {
         let cell = tableView.dequeueReusableCell(withIdentifier: "GalleryCell", for: indexPath)
 
         // Configure the cell...
-        cell.textLabel?.text = sections[indexPath.section][indexPath.row]
+        let textField = UITextField(frame: cell.frame)
+        textField.text = sections[indexPath.section][indexPath.row]
+        cell.addSubview(textField)
         return cell
     }
 
     @IBAction func addNewGallery(_ sender: UIBarButtonItem) {
-        if !sections[1].contains("Untitled") {
-            sections[1] += ["Untitled"]
+        if !sections[0].contains("Untitled") {
+            sections[0] += ["Untitled"]
             galleries.append([])
         } else {
             let untitledCell = "Untitled"
             var numberOfUntitledCell = 1
             var itemThatExists = untitledCell + " " + String(numberOfUntitledCell)
-            while sections[1].contains(itemThatExists)
+            while sections[0].contains(itemThatExists)
             {
                 numberOfUntitledCell += 1
                 itemThatExists = untitledCell + " " + String(numberOfUntitledCell)
             }
-            sections[1] += [itemThatExists]
+            sections[0] += [itemThatExists]
             let newURL = URL(string: NASAURLStrings["Cassini"]!)!
             galleries.append([newURL])
         }
@@ -92,26 +94,26 @@ class GalleriesTableViewController: UITableViewController {
     
     // Override to support editing the table view.
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
-        if indexPath.section == 1 {
+        if indexPath.section == 0 {
             if editingStyle == .delete {
-                sections[0].append(sections[1][indexPath.row])
-                sections[1].remove(at: indexPath.row)
+                sections[1].append(sections[0][indexPath.row])
+                sections[0].remove(at: indexPath.row)
 //                tableView.deleteRows(at: [indexPath], with: .fade)
             } else if editingStyle == .insert {
                 // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
             }
         } else {
-            sections[0].remove(at: indexPath.row)
+            sections[1].remove(at: indexPath.row)
             galleries.remove(at: indexPath.row)
         }
         tableView.reloadData()
     }
     
     override func tableView(_ tableView: UITableView, leadingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
-        if indexPath.section == 0 {
+        if indexPath.section == 1 {
             let undelete = UIContextualAction(style: UIContextualAction.Style.normal, title: "Undelete") { [self]_,_,_ in
-                self.sections[1].append(sections[0][indexPath.row])
-                self.sections[0].remove(at: indexPath.row)
+                self.sections[0].append(sections[1][indexPath.row])
+                self.sections[1].remove(at: indexPath.row)
                 tableView.reloadData()
             }
             let swipeAction = UISwipeActionsConfiguration(actions: [undelete])
@@ -130,7 +132,7 @@ class GalleriesTableViewController: UITableViewController {
 //    }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        if indexPath.section == 0 {
+        if indexPath.section == 1 {
                 performSegue(withIdentifier: "Show Recently Deleted", sender: self)
         } else {
             selectedGallery = galleries[indexPath.row]
