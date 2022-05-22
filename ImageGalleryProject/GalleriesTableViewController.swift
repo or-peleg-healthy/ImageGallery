@@ -9,8 +9,7 @@ import UIKit
 
 class GalleriesTableViewController: UITableViewController, UITextFieldDelegate {
     
-    var sections: [[String]] = [[]]
-    var galleries: [[URL]] = []
+    
     let NASAURLStrings = [
         "Cassini": "https://www.biography.com/.image/ar_1:1%2Cc_fill%2Ccs_srgb%2Cg_face%2Cq_auto:good%2Cw_300/MTQ3NTI2NTg2OTE1MTA0MjM4/kenrick_lamar_photo_by_jason_merritt_getty_images_entertainment_getty_476933160.jpg",
         "Earth": "https://www.nasa.gov/sites/default/files/wave_earth_mosaic_3.jpg",
@@ -18,14 +17,14 @@ class GalleriesTableViewController: UITableViewController, UITextFieldDelegate {
     var selectedGallery: [URL] = []
     var recentlyDeletedGallery: [URL] = []
     
+    var onlineGalleries: [Gallery] = []
+    var deletedGalleries: [Gallery] = []
+    var namesForOnlineGalleries: [String] = []
+    var namesForDeletedGalleries: [String] = []
+    lazy var tapToEditName = UITapGestureRecognizer(target: self, action: #selector(tapHandler(_:)))
+
     override func viewDidLoad() {
         super.viewDidLoad()
-        sections = [[], []]
-        // Uncomment the following line to preserve selection between presentations
-        // self.clearsSelectionOnViewWillAppear = false
-
-        // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-        // self.navigationItem.rightBarButtonItem = self.editButtonItem
     }
 
     // MARK: - Table view data source
@@ -38,25 +37,28 @@ class GalleriesTableViewController: UITableViewController, UITextFieldDelegate {
         if section == 1 {
             return "Recently Deleted"
         } else {
-            return "No Title"
+            return "Online Galleries"
         }
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        // #warning Incomplete implementation, return the number of rows
-        return self.sections[section].count
+        if section == 0 {
+            return onlineGalleries.count
+        } else {
+            return deletedGalleries.count
+        }
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "GalleryCell", for: indexPath)
-        
-        // Configure the cell...
         let textField = UITextField(frame: cell.frame)
-        let tapToEditName = UITapGestureRecognizer(target: self, action: #selector(tapHandler(_:)))
         tapToEditName.numberOfTapsRequired = 2
         cell.addGestureRecognizer(tapToEditName)
-        textField.delegate = self
-        textField.text = sections[indexPath.section][indexPath.row]
+        if indexPath.section == 0 {
+            textField.text = namesForOnlineGalleries[indexPath.row]
+        } else {
+            textField.text = namesForDeletedGalleries[indexPath.row]
+        }
         cell.addSubview(textField)
         return cell
     }
@@ -73,22 +75,9 @@ class GalleriesTableViewController: UITableViewController, UITextFieldDelegate {
     }
     
     @IBAction func addNewGallery(_ sender: UIBarButtonItem) {
-        if !sections[0].contains("Untitled") {
-            sections[0] += ["Untitled"]
-            galleries.append([])
-        } else {
-            let untitledCell = "Untitled"
-            var numberOfUntitledCell = 1
-            var itemThatExists = untitledCell + " " + String(numberOfUntitledCell)
-            while sections[0].contains(itemThatExists)
-            {
-                numberOfUntitledCell += 1
-                itemThatExists = untitledCell + " " + String(numberOfUntitledCell)
-            }
-            sections[0] += [itemThatExists]
-            let newURL = URL(string: NASAURLStrings["Cassini"]!)!
-            galleries.append([newURL])
-        }
+        let newGallery = Gallery(name: "Untitled")
+        onlineGalleries.append(newGallery)
+        namesForOnlineGalleries.append(newGallery.name)
         tableView.reloadData()
     }
 
@@ -99,25 +88,22 @@ class GalleriesTableViewController: UITableViewController, UITextFieldDelegate {
         }
     }
     
-    /*
-    // Override to support conditional editing of the table view.
-    override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
-        // Return false if you do not want the specified item to be editable.
-        return true
-    }
-    */
 
-    
-    // Override to support editing the table view.
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if indexPath.section == 0 {
             if editingStyle == .delete {
-                sections[1].append(sections[0][indexPath.row])
-                sections[0].remove(at: indexPath.row)
+                tableView.performBatchUpdates {
+                    deletedGalleries.append(onlineGalleries[indexPath.row])
+                    namesForDeletedGalleries.append(namesForOnlineGalleries[indexPath.row])
+                    onlineGalleries.remove(at: indexPath.row)
+                    namesForOnlineGalleries.remove(at: indexPath.row)
+                }
             } else if editingStyle == .insert { }
         } else {
-            sections[1].remove(at: indexPath.row)
-            galleries.remove(at: indexPath.row)
+            tableView.performBatchUpdates {
+                deletedGalleries.remove(at: indexPath.row)
+                namesForDeletedGalleries.remove(at: indexPath.row)
+            }
         }
         tableView.reloadData()
     }
@@ -125,9 +111,13 @@ class GalleriesTableViewController: UITableViewController, UITextFieldDelegate {
     override func tableView(_ tableView: UITableView, leadingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
         if indexPath.section == 1 {
             let undelete = UIContextualAction(style: UIContextualAction.Style.normal, title: "Undelete") { [self]_,_,_ in
-                self.sections[0].append(sections[1][indexPath.row])
-                self.sections[1].remove(at: indexPath.row)
-                tableView.reloadData()
+                tableView.performBatchUpdates {
+                    self.onlineGalleries.append(deletedGalleries[indexPath.row])
+                    self.namesForOnlineGalleries.append(namesForDeletedGalleries[indexPath.row])
+                    self.deletedGalleries.remove(at: indexPath.row)
+                    self.namesForDeletedGalleries.remove(at: indexPath.row)
+                    tableView.reloadData()
+                }
             }
             let swipeAction = UISwipeActionsConfiguration(actions: [undelete])
             return swipeAction
@@ -135,20 +125,11 @@ class GalleriesTableViewController: UITableViewController, UITextFieldDelegate {
             return nil
         }
     }
-//    override func tableView(_ tableView: UITableView, editingStyleForRowAt indexPath: IndexPath) -> UITableViewCell.EditingStyle
-//    {
-//        if indexPath.section == 0 {
-//            return UITableViewCell.EditingStyle.none
-//        } else {
-//            return UITableViewCell.EditingStyle.delete
-//        }
-//    }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if indexPath.section == 1 {
                 performSegue(withIdentifier: "Show Recently Deleted", sender: self)
         } else {
-            selectedGallery = galleries[indexPath.row]
             performSegue(withIdentifier: "Show Image Gallery", sender: self)
         }
     }
@@ -163,29 +144,4 @@ class GalleriesTableViewController: UITableViewController, UITextFieldDelegate {
             }
         }
     }
-    /*
-    // Override to support rearranging the table view.
-    override func tableView(_ tableView: UITableView, moveRowAt fromIndexPath: IndexPath, to: IndexPath) {
-
-    }
-    */
-
-    /*
-    // Override to support conditional rearranging of the table view.
-    override func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
-        // Return false if you do not want the item to be re-orderable.
-        return true
-    }
-    */
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
 }

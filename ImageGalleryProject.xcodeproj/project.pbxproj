@@ -16,6 +16,8 @@
 		B0529058283A28D300C96072 /* GalleriesTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0529057283A28D300C96072 /* GalleriesTableViewController.swift */; };
 		B052905C283A449500C96072 /* ImagesCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B052905B283A449500C96072 /* ImagesCollectionViewController.swift */; };
 		B052905E283A4DB900C96072 /* ImageCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B052905D283A4DB900C96072 /* ImageCollectionViewCell.swift */; };
+		B0DA2B13283A8C6D00A29C0B /* Gallery.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0DA2B12283A8C6D00A29C0B /* Gallery.swift */; };
+		B0DA2B15283A8CB100A29C0B /* WebImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0DA2B14283A8CB100A29C0B /* WebImage.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -30,6 +32,8 @@
 		B0529057283A28D300C96072 /* GalleriesTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GalleriesTableViewController.swift; sourceTree = "<group>"; };
 		B052905B283A449500C96072 /* ImagesCollectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagesCollectionViewController.swift; sourceTree = "<group>"; };
 		B052905D283A4DB900C96072 /* ImageCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageCollectionViewCell.swift; sourceTree = "<group>"; };
+		B0DA2B12283A8C6D00A29C0B /* Gallery.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Gallery.swift; sourceTree = "<group>"; };
+		B0DA2B14283A8CB100A29C0B /* WebImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebImage.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -65,6 +69,8 @@
 				B0529052283A214300C96072 /* Supporting Files */,
 				B0529044283A213400C96072 /* Main.storyboard */,
 				B0529057283A28D300C96072 /* GalleriesTableViewController.swift */,
+				B0DA2B12283A8C6D00A29C0B /* Gallery.swift */,
+				B0DA2B14283A8CB100A29C0B /* WebImage.swift */,
 				B052905B283A449500C96072 /* ImagesCollectionViewController.swift */,
 				B052905D283A4DB900C96072 /* ImageCollectionViewCell.swift */,
 				B0529055283A25D100C96072 /* ImageViewController.swift */,
@@ -157,6 +163,8 @@
 			files = (
 				B052905E283A4DB900C96072 /* ImageCollectionViewCell.swift in Sources */,
 				B0529058283A28D300C96072 /* GalleriesTableViewController.swift in Sources */,
+				B0DA2B15283A8CB100A29C0B /* WebImage.swift in Sources */,
+				B0DA2B13283A8C6D00A29C0B /* Gallery.swift in Sources */,
 				B052903F283A213400C96072 /* AppDelegate.swift in Sources */,
 				B0529056283A25D100C96072 /* ImageViewController.swift in Sources */,
 				B052905C283A449500C96072 /* ImagesCollectionViewController.swift in Sources */,
