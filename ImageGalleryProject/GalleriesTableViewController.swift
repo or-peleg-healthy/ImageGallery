@@ -13,7 +13,7 @@ class GalleriesTableViewController: UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        sections = [[], ["Recently Deleted"]]
+        sections = [["Recently Deleted"], []]
         
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
@@ -42,18 +42,18 @@ class GalleriesTableViewController: UITableViewController {
     }
 
     @IBAction func addNewGallery(_ sender: UIBarButtonItem) {
-        if !sections[0].contains("Untitled") {
-            sections[0] += ["Untitled"]
+        if !sections[1].contains("Untitled") {
+            sections[1] += ["Untitled"]
         } else {
             let untitledCell = "Untitled"
             var numberOfUntitledCell = 1
             var itemThatExists = untitledCell + " " + String(numberOfUntitledCell)
-            while sections[0].contains(itemThatExists)
+            while sections[1].contains(itemThatExists)
             {
                 numberOfUntitledCell += 1
                 itemThatExists = untitledCell + " " + String(numberOfUntitledCell)
             }
-            sections[0] += [itemThatExists]
+            sections[1] += [itemThatExists]
         }
         tableView.reloadData()
     }
@@ -75,9 +75,9 @@ class GalleriesTableViewController: UITableViewController {
     
     // Override to support editing the table view.
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
-        if indexPath.section == 0 {
+        if indexPath.section == 1 {
             if editingStyle == .delete {
-                sections[0].remove(at: indexPath.row)
+                sections[1].remove(at: indexPath.row)
                 tableView.deleteRows(at: [indexPath], with: .fade)
             } else if editingStyle == .insert {
                 // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
@@ -87,7 +87,7 @@ class GalleriesTableViewController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, editingStyleForRowAt indexPath: IndexPath) -> UITableViewCell.EditingStyle
     {
-        if indexPath.section == 1 {
+        if indexPath.section == 0 {
             return UITableViewCell.EditingStyle.none
         } else {
             return UITableViewCell.EditingStyle.delete
