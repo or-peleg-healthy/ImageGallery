@@ -5,9 +5,12 @@
 //  Created by Or Peleg on 22/05/2022.
 //
 
-import Foundation
 import UIKit
 
 class ImageCollectionViewCell: UICollectionViewCell {
-    var imageURL: URL?
+    
+    @IBOutlet weak var label: UILabel!
+    func configure(with countryName: String) {
+        label.text = countryName
+    }
 }
