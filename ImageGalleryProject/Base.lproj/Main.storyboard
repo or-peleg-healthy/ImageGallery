@@ -148,7 +148,8 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
-                        <segue destination="rJZ-ZM-yVX" kind="showDetail" id="7Sn-U5-w74"/>
+                        <segue destination="rJZ-ZM-yVX" kind="showDetail" identifier="Show Image Gallery" id="7Sn-U5-w74"/>
+                        <segue destination="rJZ-ZM-yVX" kind="showDetail" identifier="Show Recently Deleted" id="P5k-sx-kPI"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="T9W-yg-89f" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -173,7 +174,7 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="7Sn-U5-w74"/>
+        <segue reference="P5k-sx-kPI"/>
     </inferredMetricsTieBreakers>
     <resources>
         <systemColor name="systemBackgroundColor">

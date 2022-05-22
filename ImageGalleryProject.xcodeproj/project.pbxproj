@@ -14,6 +14,7 @@
 		B052904B283A213600C96072 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B0529049283A213600C96072 /* LaunchScreen.storyboard */; };
 		B0529056283A25D100C96072 /* ImageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0529055283A25D100C96072 /* ImageViewController.swift */; };
 		B0529058283A28D300C96072 /* GalleriesTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0529057283A28D300C96072 /* GalleriesTableViewController.swift */; };
+		B052905C283A449500C96072 /* ImagesCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B052905B283A449500C96072 /* ImagesCollectionViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -26,6 +27,7 @@
 		B052904C283A213600C96072 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		B0529055283A25D100C96072 /* ImageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageViewController.swift; sourceTree = "<group>"; };
 		B0529057283A28D300C96072 /* GalleriesTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GalleriesTableViewController.swift; sourceTree = "<group>"; };
+		B052905B283A449500C96072 /* ImagesCollectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagesCollectionViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -61,6 +63,7 @@
 				B0529052283A214300C96072 /* Supporting Files */,
 				B0529044283A213400C96072 /* Main.storyboard */,
 				B0529057283A28D300C96072 /* GalleriesTableViewController.swift */,
+				B052905B283A449500C96072 /* ImagesCollectionViewController.swift */,
 				B0529055283A25D100C96072 /* ImageViewController.swift */,
 				B052904C283A213600C96072 /* Info.plist */,
 			);
@@ -152,6 +155,7 @@
 				B0529058283A28D300C96072 /* GalleriesTableViewController.swift in Sources */,
 				B052903F283A213400C96072 /* AppDelegate.swift in Sources */,
 				B0529056283A25D100C96072 /* ImageViewController.swift in Sources */,
+				B052905C283A449500C96072 /* ImagesCollectionViewController.swift in Sources */,
 				B0529041283A213400C96072 /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

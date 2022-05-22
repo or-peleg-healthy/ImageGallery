@@ -10,11 +10,13 @@ import UIKit
 class GalleriesTableViewController: UITableViewController {
     
     var sections: [[String]] = [[]]
+    var galleries: [[URL]] = []
+    var selectedGallery: [URL] = []
+    var recentlyDeletedGallery: [URL] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
         sections = [["Recently Deleted"], []]
-        
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
 
@@ -44,6 +46,7 @@ class GalleriesTableViewController: UITableViewController {
     @IBAction func addNewGallery(_ sender: UIBarButtonItem) {
         if !sections[1].contains("Untitled") {
             sections[1] += ["Untitled"]
+            galleries.append([])
         } else {
             let untitledCell = "Untitled"
             var numberOfUntitledCell = 1
@@ -54,6 +57,7 @@ class GalleriesTableViewController: UITableViewController {
                 itemThatExists = untitledCell + " " + String(numberOfUntitledCell)
             }
             sections[1] += [itemThatExists]
+            galleries.append([])
         }
         tableView.reloadData()
     }
@@ -78,6 +82,7 @@ class GalleriesTableViewController: UITableViewController {
         if indexPath.section == 1 {
             if editingStyle == .delete {
                 sections[1].remove(at: indexPath.row)
+                galleries.remove(at: indexPath.row)
                 tableView.deleteRows(at: [indexPath], with: .fade)
             } else if editingStyle == .insert {
                 // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
@@ -93,7 +98,25 @@ class GalleriesTableViewController: UITableViewController {
             return UITableViewCell.EditingStyle.delete
         }
     }
-
+    
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        if indexPath.section == 0 {
+                performSegue(withIdentifier: "Show Recently Deleted", sender: self)
+        } else {
+            selectedGallery = galleries[indexPath.row]
+            performSegue(withIdentifier: "Show Image Gallery", sender: self)
+        }
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if let destination = segue.destination as? ImagesCollectionViewController {
+            if segue.identifier == "Recently Deleted" {
+                    destination.imageURLs = recentlyDeletedGallery
+            } else {
+                destination.imageURLs = selectedGallery
+            }
+        }
+    }
     /*
     // Override to support rearranging the table view.
     override func tableView(_ tableView: UITableView, moveRowAt fromIndexPath: IndexPath, to: IndexPath) {
