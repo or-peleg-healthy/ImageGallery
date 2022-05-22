@@ -123,8 +123,8 @@ class GalleriesTableViewController: UITableViewController, UITextFieldDelegate {
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if indexPath.section == 0 {
-            performSegue(withIdentifier: "Show Image Gallery", sender: self)
             selectedGallery = onlineGalleries[indexPath.row]
+            performSegue(withIdentifier: "Show Image Gallery", sender: self)
         } else {
             return
         }

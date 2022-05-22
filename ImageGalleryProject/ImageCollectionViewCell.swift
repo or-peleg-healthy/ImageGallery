@@ -9,17 +9,21 @@ import UIKit
 
 class ImageCollectionViewCell: UICollectionViewCell {
     
-    @IBOutlet weak var cellView: UIView!
+    
+    @IBOutlet weak var cellView: UIImageView!
+    @IBOutlet weak var spinner: UIActivityIndicatorView!
+    
     
     func configure(with imageURL: URL) {
-        let spinner = UIActivityIndicatorView(frame: cellView.frame)
-        cellView.addSubview(spinner)
         spinner.startAnimating()
         DispatchQueue.global(qos: .userInitiated).async {
             let urlContents = try? Data(contentsOf: imageURL)
             DispatchQueue.main.async {
-                spinner.removeFromSuperview()
-                self.cellView.backgroundColor = UIColor(patternImage: UIImage(data: urlContents!)!)
+                self.spinner.startAnimating()
+                var image = UIImage(data: urlContents!)
+                self.cellView.image = image
+                self.cellView.sizeToFit()
+                self.sizeToFit()
             }
         }
     }

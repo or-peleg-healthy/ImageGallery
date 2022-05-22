@@ -44,20 +44,24 @@
                                     <rect key="frame" x="0.0" y="0.0" width="128" height="128"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="uWg-82-odI">
+                                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="7XU-DA-XsN">
                                             <rect key="frame" x="0.0" y="0.0" width="128" height="128"/>
-                                            <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                                        </view>
+                                        </imageView>
+                                        <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" style="medium" translatesAutoresizingMaskIntoConstraints="NO" id="CJG-AM-jNi">
+                                            <rect key="frame" x="54" y="54" width="20" height="20"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        </activityIndicatorView>
                                     </subviews>
                                     <constraints>
-                                        <constraint firstItem="uWg-82-odI" firstAttribute="top" secondItem="5Wc-EV-0gh" secondAttribute="top" id="4ld-5w-od4"/>
-                                        <constraint firstItem="uWg-82-odI" firstAttribute="leading" secondItem="5Wc-EV-0gh" secondAttribute="leading" id="KS4-m3-meY"/>
-                                        <constraint firstAttribute="trailing" secondItem="uWg-82-odI" secondAttribute="trailing" id="Nl5-vH-QAb"/>
-                                        <constraint firstAttribute="bottom" secondItem="uWg-82-odI" secondAttribute="bottom" id="egE-Mo-VJn"/>
+                                        <constraint firstItem="7XU-DA-XsN" firstAttribute="leading" secondItem="5Wc-EV-0gh" secondAttribute="leading" id="0Mb-rp-pIF"/>
+                                        <constraint firstAttribute="trailing" secondItem="7XU-DA-XsN" secondAttribute="trailing" id="2Xq-WH-3J6"/>
+                                        <constraint firstItem="7XU-DA-XsN" firstAttribute="top" secondItem="5Wc-EV-0gh" secondAttribute="top" id="8lP-tV-n2U"/>
+                                        <constraint firstAttribute="bottom" secondItem="7XU-DA-XsN" secondAttribute="bottom" id="zLr-HJ-RHx"/>
                                     </constraints>
                                 </collectionViewCellContentView>
                                 <connections>
-                                    <outlet property="cellView" destination="uWg-82-odI" id="3Bn-Qk-rbV"/>
+                                    <outlet property="cellView" destination="7XU-DA-XsN" id="EKL-XE-ab2"/>
+                                    <outlet property="spinner" destination="CJG-AM-jNi" id="CkW-dd-dRz"/>
                                 </connections>
                             </collectionViewCell>
                         </cells>

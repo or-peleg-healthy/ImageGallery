@@ -16,7 +16,7 @@ class ImagesCollectionViewController: UICollectionViewController {
     }
     
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return (gallery?.images.count) ?? 0
+        return gallery?.images.count ?? 0
     }
     
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -27,6 +27,7 @@ class ImagesCollectionViewController: UICollectionViewController {
             imageCell.configure(with: ((gallery?.images[indexPath.item].imageURL) ?? defaultURL)!)
             
             cell = imageCell
+            self.view.sizeToFit()
         }
         return cell
     }
