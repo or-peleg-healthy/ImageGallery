@@ -14,9 +14,8 @@ class GalleriesTableViewController: UITableViewController, UITextFieldDelegate {
         "Cassini": "https://www.biography.com/.image/ar_1:1%2Cc_fill%2Ccs_srgb%2Cg_face%2Cq_auto:good%2Cw_300/MTQ3NTI2NTg2OTE1MTA0MjM4/kenrick_lamar_photo_by_jason_merritt_getty_images_entertainment_getty_476933160.jpg",
         "Earth": "https://www.nasa.gov/sites/default/files/wave_earth_mosaic_3.jpg",
         "Saturn": "https://www.nasa.gov/sites/default/files/saturn_collage.jpg"]
-    var selectedGallery: [URL] = []
-    var recentlyDeletedGallery: [URL] = []
     
+    var selectedGallery: Gallery?
     var onlineGalleries: [Gallery] = []
     var deletedGalleries: [Gallery] = []
     var namesForOnlineGalleries: [String] = []
@@ -67,6 +66,7 @@ class GalleriesTableViewController: UITableViewController, UITextFieldDelegate {
         if let cellView = sender.view as? UITableViewCell {
             for subview in cellView.subviews {
                 if let textField = subview as? UITextField {
+                    textField.text = "Tapped"
                     textField.isEnabled = true
                     return
                 }
@@ -76,6 +76,7 @@ class GalleriesTableViewController: UITableViewController, UITextFieldDelegate {
     
     @IBAction func addNewGallery(_ sender: UIBarButtonItem) {
         let newGallery = Gallery(name: "Untitled")
+        newGallery.images = [WebImage(URL(string: "https://www.biography.com/.image/ar_1:1%2Cc_fill%2Ccs_srgb%2Cg_face%2Cq_auto:good%2Cw_300/MTQ3NTI2NTg2OTE1MTA0MjM4/kenrick_lamar_photo_by_jason_merritt_getty_images_entertainment_getty_476933160.jpg")!, 10)]
         onlineGalleries.append(newGallery)
         namesForOnlineGalleries.append(newGallery.name)
         tableView.reloadData()
@@ -92,18 +93,14 @@ class GalleriesTableViewController: UITableViewController, UITextFieldDelegate {
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if indexPath.section == 0 {
             if editingStyle == .delete {
-                tableView.performBatchUpdates {
-                    deletedGalleries.append(onlineGalleries[indexPath.row])
-                    namesForDeletedGalleries.append(namesForOnlineGalleries[indexPath.row])
-                    onlineGalleries.remove(at: indexPath.row)
-                    namesForOnlineGalleries.remove(at: indexPath.row)
-                }
+                deletedGalleries.append(onlineGalleries[indexPath.row])
+                namesForDeletedGalleries.append(namesForOnlineGalleries[indexPath.row])
+                onlineGalleries.remove(at: indexPath.row)
+                namesForOnlineGalleries.remove(at: indexPath.row)
             } else if editingStyle == .insert { }
         } else {
-            tableView.performBatchUpdates {
-                deletedGalleries.remove(at: indexPath.row)
-                namesForDeletedGalleries.remove(at: indexPath.row)
-            }
+            deletedGalleries.remove(at: indexPath.row)
+            namesForDeletedGalleries.remove(at: indexPath.row)
         }
         tableView.reloadData()
     }
@@ -111,13 +108,11 @@ class GalleriesTableViewController: UITableViewController, UITextFieldDelegate {
     override func tableView(_ tableView: UITableView, leadingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
         if indexPath.section == 1 {
             let undelete = UIContextualAction(style: UIContextualAction.Style.normal, title: "Undelete") { [self]_,_,_ in
-                tableView.performBatchUpdates {
-                    self.onlineGalleries.append(deletedGalleries[indexPath.row])
-                    self.namesForOnlineGalleries.append(namesForDeletedGalleries[indexPath.row])
-                    self.deletedGalleries.remove(at: indexPath.row)
-                    self.namesForDeletedGalleries.remove(at: indexPath.row)
-                    tableView.reloadData()
-                }
+                self.onlineGalleries.append(deletedGalleries[indexPath.row])
+                self.namesForOnlineGalleries.append(namesForDeletedGalleries[indexPath.row])
+                self.deletedGalleries.remove(at: indexPath.row)
+                self.namesForDeletedGalleries.remove(at: indexPath.row)
+                tableView.reloadData()
             }
             let swipeAction = UISwipeActionsConfiguration(actions: [undelete])
             return swipeAction
@@ -127,20 +122,21 @@ class GalleriesTableViewController: UITableViewController, UITextFieldDelegate {
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        if indexPath.section == 1 {
-                performSegue(withIdentifier: "Show Recently Deleted", sender: self)
-        } else {
+        if indexPath.section == 0 {
             performSegue(withIdentifier: "Show Image Gallery", sender: self)
+            selectedGallery = onlineGalleries[indexPath.row]
+        } else {
+            return
         }
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if let destination = segue.destination as? ImagesCollectionViewController {
-            if segue.identifier == "Recently Deleted" {
-                destination.title = "Recently Deleted"
-                destination.imageURLs = recentlyDeletedGallery
+            if segue.identifier == "Show Image Gallery" {
+                destination.title = selectedGallery?.name
+                destination.gallery = selectedGallery
             } else {
-                destination.imageURLs = selectedGallery
+                return
             }
         }
     }

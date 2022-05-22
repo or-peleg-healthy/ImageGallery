@@ -44,22 +44,20 @@
                                     <rect key="frame" x="0.0" y="0.0" width="128" height="128"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="UZ9-Tl-Yy7">
-                                            <rect key="frame" x="11" y="37" width="107.5" height="55"/>
-                                            <fontDescription key="fontDescription" type="system" pointSize="46"/>
-                                            <nil key="textColor"/>
-                                            <nil key="highlightedColor"/>
-                                        </label>
+                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="uWg-82-odI">
+                                            <rect key="frame" x="0.0" y="0.0" width="128" height="128"/>
+                                            <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                        </view>
                                     </subviews>
                                     <constraints>
-                                        <constraint firstAttribute="trailing" secondItem="UZ9-Tl-Yy7" secondAttribute="trailing" constant="9.5" id="Dzl-fK-dd7"/>
-                                        <constraint firstAttribute="bottom" secondItem="UZ9-Tl-Yy7" secondAttribute="bottom" constant="36" id="crW-YL-vmi"/>
-                                        <constraint firstItem="UZ9-Tl-Yy7" firstAttribute="top" secondItem="5Wc-EV-0gh" secondAttribute="top" constant="37" id="iDZ-U5-fqr"/>
-                                        <constraint firstItem="UZ9-Tl-Yy7" firstAttribute="leading" secondItem="5Wc-EV-0gh" secondAttribute="leading" constant="11" id="qxZ-IQ-IlA"/>
+                                        <constraint firstItem="uWg-82-odI" firstAttribute="top" secondItem="5Wc-EV-0gh" secondAttribute="top" id="4ld-5w-od4"/>
+                                        <constraint firstItem="uWg-82-odI" firstAttribute="leading" secondItem="5Wc-EV-0gh" secondAttribute="leading" id="KS4-m3-meY"/>
+                                        <constraint firstAttribute="trailing" secondItem="uWg-82-odI" secondAttribute="trailing" id="Nl5-vH-QAb"/>
+                                        <constraint firstAttribute="bottom" secondItem="uWg-82-odI" secondAttribute="bottom" id="egE-Mo-VJn"/>
                                     </constraints>
                                 </collectionViewCellContentView>
                                 <connections>
-                                    <outlet property="label" destination="UZ9-Tl-Yy7" id="xaJ-P7-LwS"/>
+                                    <outlet property="cellView" destination="uWg-82-odI" id="3Bn-Qk-rbV"/>
                                 </connections>
                             </collectionViewCell>
                         </cells>
@@ -137,6 +135,7 @@
         <!--Navigation Controller-->
         <scene sceneID="8Yu-cY-rY7">
             <objects>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="yHv-pI-cOd" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
                 <navigationController id="rJZ-ZM-yVX" sceneMemberID="viewController">
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="2IV-QZ-7yk">
                         <rect key="frame" x="0.0" y="44" width="414" height="44"/>
@@ -146,7 +145,6 @@
                         <segue destination="Ro3-g5-4de" kind="relationship" relationship="rootViewController" id="ns1-hk-YG5"/>
                     </connections>
                 </navigationController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="yHv-pI-cOd" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1112" y="1235"/>
         </scene>
@@ -193,8 +191,7 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
-                        <segue destination="rJZ-ZM-yVX" kind="showDetail" identifier="Show Image Gallery" id="7Sn-U5-w74"/>
-                        <segue destination="rJZ-ZM-yVX" kind="showDetail" identifier="Show Recently Deleted" id="P5k-sx-kPI"/>
+                        <segue destination="Ro3-g5-4de" kind="showDetail" identifier="Show Image Gallery" id="gKO-5p-tl5"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="T9W-yg-89f" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -219,7 +216,7 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="7Sn-U5-w74"/>
+        <segue reference="gKO-5p-tl5"/>
     </inferredMetricsTieBreakers>
     <resources>
         <systemColor name="systemBackgroundColor">
