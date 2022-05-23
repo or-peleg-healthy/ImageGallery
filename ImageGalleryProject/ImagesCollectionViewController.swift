@@ -11,6 +11,8 @@ import UIKit
 class ImagesCollectionViewController: UICollectionViewController {
     let defaultURL = URL(string: "https://www.biography.com/.image/ar_1:1%2Cc_fill%2Ccs_srgb%2Cg_face%2Cq_auto:good%2Cw_300/MTQ3NTI2NTg2OTE1MTA0MjM4/kenrick_lamar_photo_by_jason_merritt_getty_images_entertainment_getty_476933160.jpg")
     var gallery: Gallery?
+    var chosenImageToEnlarge: WebImage?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
     }
@@ -31,5 +33,20 @@ class ImagesCollectionViewController: UICollectionViewController {
             cell = imageCell
         }
         return cell
+    }
+    
+    override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        chosenImageToEnlarge = gallery?.images[indexPath.item]
+        performSegue(withIdentifier: "Show Image", sender: self)
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if let destination = segue.destination as? ImageViewController {
+            if segue.identifier == "Show Image" {
+                destination.imageURL = chosenImageToEnlarge?.imageURL
+            } else {
+                return
+            }
+        }
     }
 }

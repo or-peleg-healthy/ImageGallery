@@ -10,10 +10,10 @@ import UIKit
 class GalleriesTableViewController: UITableViewController, UITextFieldDelegate {
     
     
-    let NASAURLStrings = [
-        "Cassini": "https://www.biography.com/.image/ar_1:1%2Cc_fill%2Ccs_srgb%2Cg_face%2Cq_auto:good%2Cw_300/MTQ3NTI2NTg2OTE1MTA0MjM4/kenrick_lamar_photo_by_jason_merritt_getty_images_entertainment_getty_476933160.jpg",
-        "Earth": "https://www.nasa.gov/sites/default/files/wave_earth_mosaic_3.jpg",
-        "Saturn": "https://www.nasa.gov/sites/default/files/saturn_collage.jpg"]
+    let urlStrings = [
+        "one": "https://www.biography.com/.image/ar_1:1%2Cc_fill%2Ccs_srgb%2Cg_face%2Cq_auto:good%2Cw_300/MTQ3NTI2NTg2OTE1MTA0MjM4/kenrick_lamar_photo_by_jason_merritt_getty_images_entertainment_getty_476933160.jpg",
+        "two": "https://boardroom.tv/wp-content/uploads/2022/05/Kendrick-Lamar-The-Heart-Part-5-1280x720.png",
+        "three": "https://media-cldnry.s-nbcnews.com/image/upload/t_fit-1240w,f_auto,q_auto:best/rockcms/2022-05/220513-kendrick-lamar-mn-1225-f90ed6.jpg"]
     
     var selectedGallery: Gallery?
     var onlineGalleries: [Gallery] = []
@@ -78,14 +78,14 @@ class GalleriesTableViewController: UITableViewController, UITextFieldDelegate {
     @IBAction func addNewGallery(_ sender: UIBarButtonItem) {
         let newGallery = Gallery(name: "Untitled \(countGalleries)")
         if countGalleries >= 0 {
-            newGallery.images = [WebImage(URL(string: "https://www.biography.com/.image/ar_1:1%2Cc_fill%2Ccs_srgb%2Cg_face%2Cq_auto:good%2Cw_300/MTQ3NTI2NTg2OTE1MTA0MjM4/kenrick_lamar_photo_by_jason_merritt_getty_images_entertainment_getty_476933160.jpg")!, 10)]
+            newGallery.images = [WebImage(URL(string: urlStrings["one"]!)!, 10)]
         }
         if countGalleries >= 1 {
-            newGallery.images.append(WebImage(URL(string: "https://www.nasa.gov/sites/default/files/wave_earth_mosaic_3.jpg")!, 10))
+            newGallery.images.append(WebImage(URL(string: urlStrings["two"]!)!, 10))
         }
         
         if countGalleries >= 2 {
-            newGallery.images.append(WebImage(URL(string: "https://www.nasa.gov/sites/default/files/saturn_collage.jpg")!, 10))
+            newGallery.images.append(WebImage(URL(string: urlStrings["three"]!)!, 10))
         }
         countGalleries += 1
         onlineGalleries.append(newGallery)
