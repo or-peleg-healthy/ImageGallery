@@ -20,7 +20,6 @@ class GalleriesTableViewController: UITableViewController, UITextFieldDelegate {
     var deletedGalleries: [Gallery] = []
     var namesForOnlineGalleries: [String] = []
     var namesForDeletedGalleries: [String] = []
-    lazy var tapToEditName = UITapGestureRecognizer(target: self, action: #selector(tapHandler(_:)))
     var countGalleries = 0
 
     override func viewDidLoad() {
@@ -51,29 +50,27 @@ class GalleriesTableViewController: UITableViewController, UITextFieldDelegate {
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "GalleryCell", for: indexPath)
-        let textField = UITextField(frame: cell.frame)
-        tapToEditName.numberOfTapsRequired = 2
-        cell.addGestureRecognizer(tapToEditName)
-        if indexPath.section == 0 {
-            textField.text = namesForOnlineGalleries[indexPath.row]
-        } else {
-            textField.text = namesForDeletedGalleries[indexPath.row]
-        }
-        cell.addSubview(textField)
-        return cell
-    }
-    
-    @objc func tapHandler(_ sender: UITapGestureRecognizer) {
-        if let cellView = sender.view as? UITableViewCell {
-            for subview in cellView.subviews {
-                if let textField = subview as? UITextField {
-                    textField.text = "Tapped"
-                    textField.isEnabled = true
-                    return
+        if let inputCell = cell as? TextFieldTableViewCell {
+            inputCell.textField.isEnabled = true
+            inputCell.resignationHandler = { [weak self] in
+                if let text = inputCell.textField.text {
+                    self?.namesForOnlineGalleries[indexPath.item] = text
+                    self?.onlineGalleries[indexPath.item].name = text
+                    self?.tableView.reloadData()
                 }
             }
+            if indexPath.section == 0 {
+                if indexPath.item < namesForOnlineGalleries.count {
+                    inputCell.textField.text = namesForOnlineGalleries[indexPath.item]
+                }
+            } else {
+                inputCell.textField.text = namesForDeletedGalleries[indexPath.item]
+            }
+            return inputCell
         }
+        return cell
     }
+
     
     @IBAction func addNewGallery(_ sender: UIBarButtonItem) {
         let newGallery = Gallery(name: "Untitled \(countGalleries)")

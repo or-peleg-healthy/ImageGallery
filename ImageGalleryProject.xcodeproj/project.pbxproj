@@ -18,6 +18,7 @@
 		B052905E283A4DB900C96072 /* ImageCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B052905D283A4DB900C96072 /* ImageCollectionViewCell.swift */; };
 		B0DA2B13283A8C6D00A29C0B /* Gallery.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0DA2B12283A8C6D00A29C0B /* Gallery.swift */; };
 		B0DA2B15283A8CB100A29C0B /* WebImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0DA2B14283A8CB100A29C0B /* WebImage.swift */; };
+		B0DA2B1B283BC92100A29C0B /* TextFieldTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0DA2B1A283BC92100A29C0B /* TextFieldTableViewCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -34,6 +35,7 @@
 		B052905D283A4DB900C96072 /* ImageCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageCollectionViewCell.swift; sourceTree = "<group>"; };
 		B0DA2B12283A8C6D00A29C0B /* Gallery.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Gallery.swift; sourceTree = "<group>"; };
 		B0DA2B14283A8CB100A29C0B /* WebImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebImage.swift; sourceTree = "<group>"; };
+		B0DA2B1A283BC92100A29C0B /* TextFieldTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextFieldTableViewCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -72,6 +74,7 @@
 				B0DA2B12283A8C6D00A29C0B /* Gallery.swift */,
 				B0DA2B14283A8CB100A29C0B /* WebImage.swift */,
 				B052905B283A449500C96072 /* ImagesCollectionViewController.swift */,
+				B0DA2B1A283BC92100A29C0B /* TextFieldTableViewCell.swift */,
 				B052905D283A4DB900C96072 /* ImageCollectionViewCell.swift */,
 				B0529055283A25D100C96072 /* ImageViewController.swift */,
 				B052904C283A213600C96072 /* Info.plist */,
@@ -167,6 +170,7 @@
 				B0DA2B13283A8C6D00A29C0B /* Gallery.swift in Sources */,
 				B052903F283A213400C96072 /* AppDelegate.swift in Sources */,
 				B0529056283A25D100C96072 /* ImageViewController.swift in Sources */,
+				B0DA2B1B283BC92100A29C0B /* TextFieldTableViewCell.swift in Sources */,
 				B052905C283A449500C96072 /* ImagesCollectionViewController.swift in Sources */,
 				B0529041283A213400C96072 /* SceneDelegate.swift in Sources */,
 			);

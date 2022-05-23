@@ -87,7 +87,7 @@
             <objects>
                 <viewController id="m4f-sI-MmE" customClass="ImageViewController" customModule="ImageGalleryProject" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="oyq-cp-EpC">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="842"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="aJm-hM-6oy">
@@ -148,25 +148,28 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="GalleryCell" id="i1e-8q-vlK">
-                                <rect key="frame" x="0.0" y="44.5" width="414" height="74.5"/>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="GalleryCell" id="i1e-8q-vlK" customClass="TextFieldTableViewCell" customModule="ImageGalleryProject" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="44.5" width="414" height="28.5"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="i1e-8q-vlK" id="RGA-8X-EEI">
-                                    <rect key="frame" x="0.0" y="0.0" width="414" height="74.5"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="414" height="28.5"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <textField opaque="NO" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="Untitled" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="wb9-T1-ydm">
-                                            <rect key="frame" x="20" y="20" width="96" height="34.5"/>
-                                            <fontDescription key="fontDescription" type="system" pointSize="28"/>
+                                        <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="Kendrick Gallery" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="p38-Ow-iMr">
+                                            <rect key="frame" x="20" y="5" width="106" height="19"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                             <textInputTraits key="textInputTraits"/>
                                         </textField>
                                     </subviews>
                                     <constraints>
-                                        <constraint firstAttribute="bottom" secondItem="wb9-T1-ydm" secondAttribute="bottom" constant="20" symbolic="YES" id="Ch2-sQ-qTM"/>
-                                        <constraint firstItem="wb9-T1-ydm" firstAttribute="leading" secondItem="RGA-8X-EEI" secondAttribute="leading" constant="20" id="eWe-ox-eoE"/>
-                                        <constraint firstItem="wb9-T1-ydm" firstAttribute="top" secondItem="RGA-8X-EEI" secondAttribute="top" constant="20" symbolic="YES" id="sa5-cR-oJd"/>
+                                        <constraint firstItem="p38-Ow-iMr" firstAttribute="top" secondItem="RGA-8X-EEI" secondAttribute="top" constant="5" id="0kZ-li-Ozu"/>
+                                        <constraint firstAttribute="bottom" secondItem="p38-Ow-iMr" secondAttribute="bottom" constant="4.5" id="Lcv-it-eVp"/>
+                                        <constraint firstItem="p38-Ow-iMr" firstAttribute="leading" secondItem="RGA-8X-EEI" secondAttribute="leading" constant="20" symbolic="YES" id="t2b-FL-dIA"/>
                                     </constraints>
                                 </tableViewCellContentView>
+                                <connections>
+                                    <outlet property="textField" destination="p38-Ow-iMr" id="cbW-XV-fya"/>
+                                </connections>
                             </tableViewCell>
                         </prototypes>
                         <connections>
@@ -191,7 +194,7 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="dfK-GK-WRa"/>
+        <segue reference="gKO-5p-tl5"/>
     </inferredMetricsTieBreakers>
     <resources>
         <systemColor name="systemBackgroundColor">
