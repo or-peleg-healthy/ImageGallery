@@ -5,11 +5,11 @@
 //  Created by Or Peleg on 22/05/2022.
 //
 
-import Foundation
+import UIKit
 
 class Gallery {
     var name: String
-    var images: [WebImage]
+    var images: [URL]
     var width: Double
     
     init(name: String) {

@@ -78,14 +78,14 @@ class GalleriesTableViewController: UITableViewController, UITextFieldDelegate {
     @IBAction func addNewGallery(_ sender: UIBarButtonItem) {
         let newGallery = Gallery(name: "Untitled \(countGalleries)")
         if countGalleries >= 0 {
-            newGallery.images = [WebImage(URL(string: urlStrings["one"]!)!, 10)]
+            newGallery.images.append(URL(string: urlStrings["one"]!)!)
         }
         if countGalleries >= 1 {
-            newGallery.images.append(WebImage(URL(string: urlStrings["two"]!)!, 10))
+            newGallery.images.append(URL(string: urlStrings["two"]!)!)
         }
         
         if countGalleries >= 2 {
-            newGallery.images.append(WebImage(URL(string: urlStrings["three"]!)!, 10))
+            newGallery.images.append(URL(string: urlStrings["three"]!)!)
         }
         countGalleries += 1
         onlineGalleries.append(newGallery)
