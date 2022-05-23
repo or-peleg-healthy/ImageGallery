@@ -21,6 +21,7 @@ class GalleriesTableViewController: UITableViewController, UITextFieldDelegate {
     var namesForOnlineGalleries: [String] = []
     var namesForDeletedGalleries: [String] = []
     lazy var tapToEditName = UITapGestureRecognizer(target: self, action: #selector(tapHandler(_:)))
+    var countGalleries = 0
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -75,8 +76,18 @@ class GalleriesTableViewController: UITableViewController, UITextFieldDelegate {
     }
     
     @IBAction func addNewGallery(_ sender: UIBarButtonItem) {
-        let newGallery = Gallery(name: "Untitled")
-        newGallery.images = [WebImage(URL(string: "https://www.biography.com/.image/ar_1:1%2Cc_fill%2Ccs_srgb%2Cg_face%2Cq_auto:good%2Cw_300/MTQ3NTI2NTg2OTE1MTA0MjM4/kenrick_lamar_photo_by_jason_merritt_getty_images_entertainment_getty_476933160.jpg")!, 10)]
+        let newGallery = Gallery(name: "Untitled \(countGalleries)")
+        if countGalleries >= 0 {
+            newGallery.images = [WebImage(URL(string: "https://www.biography.com/.image/ar_1:1%2Cc_fill%2Ccs_srgb%2Cg_face%2Cq_auto:good%2Cw_300/MTQ3NTI2NTg2OTE1MTA0MjM4/kenrick_lamar_photo_by_jason_merritt_getty_images_entertainment_getty_476933160.jpg")!, 10)]
+        }
+        if countGalleries >= 1 {
+            newGallery.images.append(WebImage(URL(string: "https://www.nasa.gov/sites/default/files/wave_earth_mosaic_3.jpg")!, 10))
+        }
+        
+        if countGalleries >= 2 {
+            newGallery.images.append(WebImage(URL(string: "https://www.nasa.gov/sites/default/files/saturn_collage.jpg")!, 10))
+        }
+        countGalleries += 1
         onlineGalleries.append(newGallery)
         namesForOnlineGalleries.append(newGallery.name)
         tableView.reloadData()
