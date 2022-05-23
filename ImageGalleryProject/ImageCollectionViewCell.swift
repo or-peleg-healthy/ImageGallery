@@ -30,7 +30,7 @@ class ImageCollectionViewCell: UICollectionViewCell {
     }
     
     func blank() {
-        self.layer.borderColor = UIColor.blue.cgColor
-        self.layer.borderWidth = CGFloat(2)
+        self.layer.borderColor = UIColor.black.cgColor
+        self.layer.borderWidth = CGFloat(0.5)
     }
 }
