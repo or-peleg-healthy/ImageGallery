@@ -16,18 +16,19 @@ class ImagesCollectionViewController: UICollectionViewController {
     }
     
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return gallery?.images.count ?? 0
+        return 100000
     }
     
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
         var cell = UICollectionViewCell()
-        
         if let imageCell = collectionView.dequeueReusableCell(withReuseIdentifier: "Cell", for: indexPath) as? ImageCollectionViewCell {
-            imageCell.configure(with: ((gallery?.images[indexPath.item].imageURL) ?? defaultURL)!)
-            
+            if gallery != nil, indexPath.item < ((gallery?.images.count)!) {
+                imageCell.configure(with: ((gallery?.images[indexPath.item].imageURL) ?? defaultURL)!)
+            } else {
+                imageCell.blank()
+            }
             cell = imageCell
-            self.view.sizeToFit()
         }
         return cell
     }
