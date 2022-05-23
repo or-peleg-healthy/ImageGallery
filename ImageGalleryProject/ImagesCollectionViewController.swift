@@ -89,20 +89,20 @@ class ImagesCollectionViewController: UICollectionViewController,  UICollectionV
         let destinationIndexPath = coordinator.destinationIndexPath ?? IndexPath(item: 0, section: 0)
         for item in coordinator.items {
             if let sourceIndexPath = item.sourceIndexPath {
-                if let attributedString = item.dragItem.localObject as? NSAttributedString {
-                    collectionView.performBatchUpdates( { emojis.remove(at: sourceIndexPath.item)
-                        emojis.insert(contentsOf: [attributedString.string], at: destinationIndexPath.item)
+                if let image = item.dragItem.localObject as? UIImage {
+                    collectionView.performBatchUpdates( { gallery?.images.remove(at: sourceIndexPath.item)
+                        gallery?.images.insert(contentsOf: [image], at: destinationIndexPath.item)
                         collectionView.deleteItems(at: [sourceIndexPath])
                         collectionView.insertItems(at: [destinationIndexPath]) })
                     coordinator.drop(item.dragItem, toItemAt: destinationIndexPath)
                 }
             } else {
                 let placeholderContext = coordinator.drop(item.dragItem, to: UICollectionViewDropPlaceholder(insertionIndexPath: destinationIndexPath, reuseIdentifier: "DropPlaceHolderCell"))
-                item.dragItem.itemProvider.loadObject(ofClass: NSAttributedString.self) { (provider, error) in
+                item.dragItem.itemProvider.loadObject(ofClass: UIImage.self) { (provider, error) in
                     DispatchQueue.main.async {
-                        if let attributedString = provider as? NSAttributedString {
+                        if let image = provider as? UIImage {
                             placeholderContext.commitInsertion(dataSourceUpdates: { insertionIndexPath in
-                                self.emojis.insert(attributedString.string, at: insertionIndexPath.item)
+                                self.gallery?.images.insert(contentsOf: [image], at: insertionIndexPath.item)
                             })
                         } else {
                             placeholderContext.deletePlaceholder()
@@ -125,7 +125,7 @@ class ImagesCollectionViewController: UICollectionViewController,  UICollectionV
         session.loadObjects(ofClass: NSURL.self) { nsurls in
             if let url = nsurls.first as? URL {
                 UIImage.loadFrom(url: url) { image in
-                    self.emojiArtBackgroundImage = image
+                    self.gallery?.images.append(image)
                 }
             }
         }
