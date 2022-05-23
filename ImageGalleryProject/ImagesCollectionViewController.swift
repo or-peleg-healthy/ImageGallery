@@ -8,25 +8,56 @@
 import UIKit
 
 
-class ImagesCollectionViewController: UICollectionViewController,  UICollectionViewDragDelegate, UICollectionViewDropDelegate, UIDropInteractionDelegate {
+class ImagesCollectionViewController: UICollectionViewController,  UICollectionViewDragDelegate, UICollectionViewDropDelegate, UIDropInteractionDelegate, UICollectionViewDelegateFlowLayout {
    
     let defaultURL = URL(string: "https://www.biography.com/.image/ar_1:1%2Cc_fill%2Ccs_srgb%2Cg_face%2Cq_auto:good%2Cw_300/MTQ3NTI2NTg2OTE1MTA0MjM4/kenrick_lamar_photo_by_jason_merritt_getty_images_entertainment_getty_476933160.jpg")
     var gallery: Gallery?
     var chosenImageToEnlarge: URL?
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
         collectionView?.dragDelegate = self
         collectionView?.dropDelegate = self
         collectionView.addInteraction(UIDropInteraction(delegate: self))
+        let pinch = UIPinchGestureRecognizer(target: self, action: #selector(pinchToScale(_:)))
+        self.collectionView.addGestureRecognizer(pinch)
+    }
+    
+    @objc func pinchToScale(_ sender: UIPinchGestureRecognizer) {
+        if sender.state == .began || sender.state == .changed {
+            if cellWidth > 300 {
+                cellWidth = 300
+                return
+            }
+            cellWidth = cellWidth * sender.scale
+            sender.scale = 1
+        }
+    }
+    
+    var flowLayout: UICollectionViewFlowLayout? {
+        return collectionView?.collectionViewLayout as? UICollectionViewFlowLayout
+    }
+    
+    private var cellWidth: CGFloat = 50 { didSet {
+        collectionView.performBatchUpdates {
+            flowLayout!.invalidateLayout()
+        } completion: { _ in
+            self.collectionView.reloadData()
+        }
+    }}
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize
+    {
+        let cellSize = CGSize(width: cellWidth, height: cellWidth)
+        return cellSize
     }
     
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 100
+        return gallery?.images.count ?? 0
     }
     
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        
         var cell = UICollectionViewCell()
         if let imageCell = collectionView.dequeueReusableCell(withReuseIdentifier: "Cell", for: indexPath) as? ImageCollectionViewCell {
             if gallery != nil, indexPath.item < ((gallery?.images.count)!) {
@@ -68,6 +99,8 @@ class ImagesCollectionViewController: UICollectionViewController,  UICollectionV
     func collectionView(_ collectionView: UICollectionView, itemsForAddingTo session: UIDragSession, at indexPath: IndexPath, point: CGPoint) -> [UIDragItem] {
         dragItems(at: indexPath)
     }
+    
+    
     
     private func dragItems(at indexPath: IndexPath) -> [UIDragItem] {
         if indexPath.item < (self.gallery?.images.count)! {
