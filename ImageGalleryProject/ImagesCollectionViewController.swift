@@ -22,7 +22,7 @@ class ImagesCollectionViewController: UICollectionViewController,  UICollectionV
     }
     
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 100000
+        return 100
     }
     
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -30,7 +30,7 @@ class ImagesCollectionViewController: UICollectionViewController,  UICollectionV
         var cell = UICollectionViewCell()
         if let imageCell = collectionView.dequeueReusableCell(withReuseIdentifier: "Cell", for: indexPath) as? ImageCollectionViewCell {
             if gallery != nil, indexPath.item < ((gallery?.images.count)!) {
-                imageCell.configure(with: ((gallery?.images[indexPath.item]) ?? defaultURL)!)
+                imageCell.configure(with: ((gallery?.images[indexPath.item])!)!)
             } else {
                 imageCell.blank()
             }
@@ -70,12 +70,16 @@ class ImagesCollectionViewController: UICollectionViewController,  UICollectionV
     }
     
     private func dragItems(at indexPath: IndexPath) -> [UIDragItem] {
-        if let imageURL = gallery?.images[indexPath.item] as? URL {
-            let urlContents = try? Data(contentsOf: imageURL)
-            let image = UIImage(data: urlContents!)
-            let dragItem = UIDragItem(itemProvider: NSItemProvider(object: image!))
-            dragItem.localObject = imageURL
-            return [dragItem]
+        if indexPath.item < (self.gallery?.images.count)! {
+            if let imageURL = gallery?.images[indexPath.item] as? URL {
+                let urlContents = try? Data(contentsOf: imageURL)
+                let image = UIImage(data: urlContents!)
+                let dragItem = UIDragItem(itemProvider: NSItemProvider(object: image!))
+                dragItem.localObject = imageURL
+                return [dragItem]
+            } else {
+                return []
+            }
         } else {
             return []
         }
@@ -111,6 +115,7 @@ class ImagesCollectionViewController: UICollectionViewController,  UICollectionV
                         if let url = provider as? URL {
                             placeholderContext.commitInsertion(dataSourceUpdates: { insertionIndexPath in
                                 self.gallery?.images.insert(contentsOf: [url], at: insertionIndexPath.item)
+                                collectionView.reloadData()
                             })
                         } else {
                             placeholderContext.deletePlaceholder()
