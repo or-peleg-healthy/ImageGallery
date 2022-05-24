@@ -17,6 +17,7 @@ class ImagesCollectionViewController: UICollectionViewController,  UICollectionV
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        print("hello")
         collectionView?.dragDelegate = self
         collectionView?.dropDelegate = self
         collectionView.addInteraction(UIDropInteraction(delegate: self))
