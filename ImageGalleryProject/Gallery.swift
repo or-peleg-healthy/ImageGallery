@@ -10,11 +10,11 @@ import UIKit
 class Gallery {
     var name: String
     var images: [URL]
-    var width: Double
+    var aspectRatios: [Double]
     
     init(name: String) {
         self.name = name
         images = []
-        width = 0
+        aspectRatios = []
     }
 }

@@ -10,11 +10,6 @@ import UIKit
 class GalleriesTableViewController: UITableViewController, UITextFieldDelegate {
     
     
-    let urlStrings = [
-        "one": "https://www.biography.com/.image/ar_1:1%2Cc_fill%2Ccs_srgb%2Cg_face%2Cq_auto:good%2Cw_300/MTQ3NTI2NTg2OTE1MTA0MjM4/kenrick_lamar_photo_by_jason_merritt_getty_images_entertainment_getty_476933160.jpg",
-        "two": "https://boardroom.tv/wp-content/uploads/2022/05/Kendrick-Lamar-The-Heart-Part-5-1280x720.png",
-        "three": "https://media-cldnry.s-nbcnews.com/image/upload/t_fit-1240w,f_auto,q_auto:best/rockcms/2022-05/220513-kendrick-lamar-mn-1225-f90ed6.jpg"]
-    
     var selectedGallery: Gallery?
     var onlineGalleries: [Gallery] = []
     var deletedGalleries: [Gallery] = []
@@ -71,19 +66,11 @@ class GalleriesTableViewController: UITableViewController, UITextFieldDelegate {
         return cell
     }
 
+    // MARK: - Table view add/remove Galleries
+
     
     @IBAction func addNewGallery(_ sender: UIBarButtonItem) {
         let newGallery = Gallery(name: "Untitled \(countGalleries)")
-        if countGalleries >= 0 {
-            newGallery.images.append(URL(string: urlStrings["one"]!)!)
-        }
-        if countGalleries >= 1 {
-            newGallery.images.append(URL(string: urlStrings["two"]!)!)
-        }
-        
-        if countGalleries >= 2 {
-            newGallery.images.append(URL(string: urlStrings["three"]!)!)
-        }
         countGalleries += 1
         onlineGalleries.append(newGallery)
         namesForOnlineGalleries.append(newGallery.name)
@@ -96,7 +83,6 @@ class GalleriesTableViewController: UITableViewController, UITextFieldDelegate {
             splitViewController?.preferredDisplayMode = UISplitViewController.DisplayMode.oneOverSecondary
         }
     }
-    
 
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if indexPath.section == 0 {
@@ -129,6 +115,8 @@ class GalleriesTableViewController: UITableViewController, UITextFieldDelegate {
         }
     }
     
+    // MARK: - Table view Navigation
+
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if indexPath.section == 0 {
             selectedGallery = onlineGalleries[indexPath.row]

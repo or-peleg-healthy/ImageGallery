@@ -49,7 +49,8 @@ class ImagesCollectionViewController: UICollectionViewController,  UICollectionV
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize
     {
-        let cellSize = CGSize(width: cellWidth, height: cellWidth)
+        let height = cellWidth / (gallery?.aspectRatios[indexPath.item])!
+        let cellSize = CGSize(width: cellWidth, height: height)
         return cellSize
     }
     
@@ -89,7 +90,7 @@ class ImagesCollectionViewController: UICollectionViewController,  UICollectionV
         }
     }
     
-    // MARK: - Collection View Drag & Drop
+    // MARK: - Collection View Drag
     
     func collectionView(_ collectionView: UICollectionView, itemsForBeginning session: UIDragSession, at indexPath: IndexPath) -> [UIDragItem] {
         session.localContext = collectionView
@@ -104,19 +105,22 @@ class ImagesCollectionViewController: UICollectionViewController,  UICollectionV
     
     private func dragItems(at indexPath: IndexPath) -> [UIDragItem] {
         if indexPath.item < (self.gallery?.images.count)! {
-            if let imageURL = gallery?.images[indexPath.item] as? URL {
-                let urlContents = try? Data(contentsOf: imageURL)
-                let image = UIImage(data: urlContents!)
-                let dragItem = UIDragItem(itemProvider: NSItemProvider(object: image!))
-                dragItem.localObject = imageURL
-                return [dragItem]
+            if let imageCell = collectionView.cellForItem(at: indexPath) as? ImageCollectionViewCell {
+                if let image = (imageCell.cellView.subviews[1] as? UIImageView)?.image {
+                    let dragItem = UIDragItem(itemProvider: NSItemProvider(object: image))
+                    dragItem.localObject = (gallery?.images[indexPath.item], gallery?.aspectRatios[indexPath.item])
+                    return [dragItem]
+                }
             } else {
                 return []
             }
         } else {
             return []
         }
+        return []
     }
+    
+    // MARK: - Collection View Drop
     
     func collectionView(_ collectionView: UICollectionView, canHandle session: UIDropSession) -> Bool {
         session.canLoadObjects(ofClass: UIImage.self)
@@ -124,7 +128,7 @@ class ImagesCollectionViewController: UICollectionViewController,  UICollectionV
     
     func collectionView(_ collectionView: UICollectionView, dropSessionDidUpdate session: UIDropSession, withDestinationIndexPath destinationIndexPath: IndexPath?) -> UICollectionViewDropProposal {
         let isSelf = (session.localDragSession?.localContext as? UICollectionView) == collectionView
-        return UICollectionViewDropProposal(operation: isSelf ? .move : .copy, intent: .insertAtDestinationIndexPath)
+        return UICollectionViewDropProposal(operation: isSelf ? .move : .copy, intent: isSelf ? .insertAtDestinationIndexPath : .insertIntoDestinationIndexPath)
     }
     
     func collectionView(_ collectionView: UICollectionView, performDropWith coordinator: UICollectionViewDropCoordinator) {
@@ -134,9 +138,12 @@ class ImagesCollectionViewController: UICollectionViewController,  UICollectionV
         }
         for item in coordinator.items {
             if let sourceIndexPath = item.sourceIndexPath {
-                if let url = item.dragItem.localObject as? URL {
-                    collectionView.performBatchUpdates( { gallery?.images.remove(at: sourceIndexPath.item)
+                if let (url, aspectRatio) = item.dragItem.localObject as? (URL, Double) {
+                    collectionView.performBatchUpdates( {
+                        gallery?.images.remove(at: sourceIndexPath.item)
+                        gallery?.aspectRatios.remove(at: sourceIndexPath.item)
                         gallery?.images.insert(contentsOf: [url], at: destinationIndexPath.item)
+                        gallery?.aspectRatios.insert(contentsOf: [aspectRatio], at: destinationIndexPath.item)
                         collectionView.deleteItems(at: [sourceIndexPath])
                         collectionView.insertItems(at: [destinationIndexPath]) })
                     coordinator.drop(item.dragItem, toItemAt: destinationIndexPath)
@@ -170,7 +177,15 @@ class ImagesCollectionViewController: UICollectionViewController,  UICollectionV
     func dropInteraction(_ interaction: UIDropInteraction, performDrop session: UIDropSession) {
         session.loadObjects(ofClass: NSURL.self) { nsurls in
             if let url = nsurls.first as? URL {
-                self.gallery?.images.append(url)
+                let urlContents = try? Data(contentsOf: url)
+                if let imageFromUrl = UIImage(data: urlContents!) {
+                    let aspectRatio = Double(imageFromUrl.size.width) / Double(imageFromUrl.size.height)
+                    self.gallery?.images.append(url)
+                    self.gallery?.aspectRatios.append(aspectRatio)
+                    self.collectionView.reloadData()
+                } else {
+                    return
+                }
             }
         }
     }

@@ -15,6 +15,12 @@ class ImageCollectionViewCell: UICollectionViewCell {
     
 
     func configure(with imageURL: URL) {
+        for subview in cellView.subviews {
+            if subview as? UIActivityIndicatorView != nil {
+                continue
+            }
+            subview.removeFromSuperview()
+        }
         spinner.alpha = 1
         spinner.startAnimating()
         DispatchQueue.global(qos: .userInitiated).async {
